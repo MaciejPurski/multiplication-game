@@ -47,6 +47,8 @@ public class GameView {
             Parent root = loader.load();
             InitView init = loader.getController();
 
+            init.setGameController(gameController);
+            init.setGameView(this);
             stage.setScene(new Scene(root));
             stage.setTitle("Init");
             stage.initModality(Modality.WINDOW_MODAL);
