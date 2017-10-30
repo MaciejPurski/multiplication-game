@@ -24,8 +24,14 @@ public class InitView {
 
     @FXML
     public void onStartClicked(MouseEvent event) {
-        gameController.initGame(Integer.parseInt(pTextField.getText()), Integer.parseInt(nTextField.getText()),
-                                Integer.parseInt(xTextField.getText()), player1Human.isSelected(), player2Human.isSelected());
+        //TODO: handle wrong values
+        gameController.initGame(gameView, Integer.parseInt(pTextField.getText()), Integer.parseInt(nTextField.getText()),
+                                Integer.parseInt(xTextField.getText()));
+
+        if (!player1Human.isSelected() || !player2Human.isSelected()) {
+            gameController.initAI(player1Human.isSelected(), player2Human.isSelected(), Integer.parseInt(player1Text.getText()),
+                                  Integer.parseInt(player2Text.getText()));
+        }
 
         Stage dialog = (Stage) ((Node) event.getTarget()).getScene().getWindow();
         dialog.close();
@@ -57,7 +63,7 @@ public class InitView {
         player2HBox.setDisable(false);
     }
 
-    public void setGameView(GameView gameView) { this.gameView = gameView; }
+    void setGameView(GameView gameView) { this.gameView = gameView; }
 
-    public void setGameController(GameController gameController) { this.gameController = gameController; }
+    void setGameController(GameController gameController) { this.gameController = gameController; }
 }

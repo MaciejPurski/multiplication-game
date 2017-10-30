@@ -79,4 +79,8 @@ public class GameView {
     void onGo2Clicked() {
 
     }
+
+    public void updateUI() {
+
+    }
 }
