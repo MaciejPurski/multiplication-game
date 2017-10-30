@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="381.0" prefWidth="351.0" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.InitView">
+   <children>
+      <VBox alignment="BOTTOM_CENTER" layoutX="8.0" layoutY="1.0" prefHeight="200.0" prefWidth="336.0">
+         <children>
+            <HBox prefHeight="167.0" prefWidth="336.0">
+               <children>
+                  <VBox prefHeight="167.0" prefWidth="166.0">
+                     <children>
+                        <Label alignment="CENTER" prefHeight="21.0" prefWidth="168.0" text="Player 1" textFill="RED">
+                           <font>
+                              <Font name="System Bold" size="18.0" />
+                           </font>
+                        </Label>
+                        <Separator prefWidth="200.0">
+                           <VBox.margin>
+                              <Insets top="10.0" />
+                           </VBox.margin>
+                        </Separator>
+                        <RadioButton fx:id="player1Human" mnemonicParsing="false" onMouseClicked="#onHumanPlayer1Clicked" selected="true" text="Human">
+                           <padding>
+                              <Insets top="10.0" />
+                           </padding>
+                           <toggleGroup>
+                              <ToggleGroup fx:id="player1" />
+                           </toggleGroup>
+                        </RadioButton>
+                        <RadioButton layoutX="10.0" layoutY="34.0" mnemonicParsing="false" onMouseClicked="#onAIPlayer1Clicked" text="AI" toggleGroup="$player1">
+                           <padding>
+                              <Insets top="10.0" />
+                           </padding>
+                        </RadioButton>
+                        <Separator prefWidth="200.0">
+                           <VBox.margin>
+                              <Insets top="10.0" />
+                           </VBox.margin>
+                        </Separator>
+                        <HBox fx:id="player1HBox" disable="true" prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <Label prefHeight="64.0" prefWidth="113.0" text="Min-max depth:" />
+                              <TextField fx:id="player1Text" prefHeight="38.0" prefWidth="41.0">
+                                 <HBox.margin>
+                                    <Insets top="15.0" />
+                                 </HBox.margin>
+                              </TextField>
+                           </children>
+                        </HBox>
+                     </children>
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </VBox>
+                  <Separator orientation="VERTICAL" prefHeight="200.0" />
+                  <VBox layoutX="10.0" layoutY="10.0" prefHeight="167.0" prefWidth="166.0">
+                     <children>
+                        <Label alignment="CENTER" prefHeight="21.0" prefWidth="168.0" text="Player 2" textFill="BLUE">
+                           <font>
+                              <Font name="System Bold" size="18.0" />
+                           </font>
+                        </Label>
+                        <Separator prefWidth="200.0">
+                           <VBox.margin>
+                              <Insets top="10.0" />
+                           </VBox.margin>
+                        </Separator>
+                        <RadioButton fx:id="player2Human" mnemonicParsing="false" onMouseClicked="#onHumanPlayer2Clicked" selected="true" text="Human">
+                           <padding>
+                              <Insets top="10.0" />
+                           </padding>
+                           <toggleGroup>
+                              <ToggleGroup fx:id="player2" />
+                           </toggleGroup>
+                        </RadioButton>
+                        <RadioButton layoutX="10.0" layoutY="34.0" mnemonicParsing="false" onMouseClicked="#onAIPlayer2Clicked" text="AI" toggleGroup="$player2">
+                           <padding>
+                              <Insets top="10.0" />
+                           </padding>
+                        </RadioButton>
+                        <Separator prefWidth="200.0">
+                           <VBox.margin>
+                              <Insets top="10.0" />
+                           </VBox.margin>
+                        </Separator>
+                        <HBox fx:id="player2HBox" disable="true" prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <Label prefHeight="64.0" prefWidth="113.0" text="Min-max depth:" />
+                              <TextField fx:id="player2Text" prefHeight="38.0" prefWidth="41.0">
+                                 <HBox.margin>
+                                    <Insets top="15.0" />
+                                 </HBox.margin>
+                              </TextField>
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+      <HBox alignment="BOTTOM_CENTER" layoutX="8.0" layoutY="337.0" prefHeight="30.0" prefWidth="336.0" spacing="20.0">
+         <children>
+            <Button fx:id="startButton" mnemonicParsing="false" onMouseClicked="#onStartClicked" prefHeight="38.0" prefWidth="131.0" text="Start" />
+            <Button fx:id="cancelButton" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onMouseClicked="#onCancelClicked" prefHeight="38.0" prefWidth="131.0" text="Cancel" />
+         </children>
+      </HBox>
+      <VBox layoutX="12.0" layoutY="219.0" prefHeight="118.0" prefWidth="328.0">
+         <children>
+            <HBox prefHeight="39.0" prefWidth="328.0">
+               <children>
+                  <Label prefHeight="39.0" prefWidth="168.0" text="Starting p value:" />
+                  <TextField fx:id="pTextField" alignment="CENTER_RIGHT" prefHeight="26.0" prefWidth="64.0" text="1">
+                     <HBox.margin>
+                        <Insets left="50.0" top="5.0" />
+                     </HBox.margin>
+                  </TextField>
+               </children>
+            </HBox>
+            <HBox fx:id="pTextField1" layoutX="10.0" layoutY="10.0" prefHeight="39.0" prefWidth="328.0">
+               <children>
+                  <Label prefHeight="39.0" prefWidth="168.0" text="N value:" />
+                  <TextField fx:id="nTextField" alignment="CENTER_RIGHT" prefHeight="26.0" prefWidth="64.0" text="10">
+                     <HBox.margin>
+                        <Insets left="50.0" top="5.0" />
+                     </HBox.margin>
+                  </TextField>
+               </children>
+            </HBox>
+            <HBox fx:id="pTextField11" layoutX="10.0" layoutY="49.0" prefHeight="39.0" prefWidth="328.0">
+               <children>
+                  <Label prefHeight="39.0" prefWidth="168.0" text="X value:" />
+                  <TextField alignment="CENTER_RIGHT" prefHeight="26.0" prefWidth="64.0" text="2" fx:id="xTextField">
+                     <HBox.margin>
+                        <Insets left="50.0" top="5.0" />
+                     </HBox.margin>
+                  </TextField>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+      <Separator layoutX="12.0" layoutY="218.0" prefHeight="3.0" prefWidth="328.0" />
+   </children>
+</AnchorPane>

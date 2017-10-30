@@ -1,14 +1,105 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="$CONTROLLER_NAME$"
-            prefHeight="400.0" prefWidth="600.0">
-
+<?import javafx.scene.control.TextField?>
+<AnchorPane prefHeight="468.0" prefWidth="387.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.GameView">
+   <children>
+      <HBox alignment="TOP_CENTER" layoutY="406.0" prefHeight="48.0" prefWidth="387.0" spacing="15.0">
+         <children>
+            <Button fx:id="newGameButton" mnemonicParsing="false" onMouseClicked="#onNewGameClicked" prefHeight="48.0" prefWidth="110.0" text="New Game" />
+            <Button fx:id="restartButton" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onMouseClicked="#onRestartClicked" prefHeight="48.0" prefWidth="110.0" text="Restart" />
+            <Button fx:id="exitButton" layoutX="120.0" layoutY="10.0" mnemonicParsing="false" onMouseClicked="#onExitClicked" prefHeight="48.0" prefWidth="110.0" text="Exit" />
+         </children>
+      </HBox>
+      <HBox layoutX="14.0" layoutY="45.0" prefHeight="290.0" prefWidth="360.0">
+         <children>
+            <VBox prefHeight="290.0" prefWidth="191.0">
+               <children>
+                  <HBox prefHeight="45.0" prefWidth="181.0">
+                     <children>
+                        <Label fx:id="player1Label" alignment="CENTER" prefHeight="45.0" prefWidth="105.0" text="Player 1:" textAlignment="CENTER" textFill="RED">
+                           <font>
+                              <Font name="System Bold Italic" size="16.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="player1Type" alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="45.0" prefWidth="95.0" textAlignment="CENTER" textFill="RED">
+                           <font>
+                              <Font name="System Bold Italic" size="16.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <ListView fx:id="player1List" prefHeight="228.0" prefWidth="181.0" />
+                  <HBox fillHeight="false" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="44.0" prefWidth="232.0">
+                     <children>
+                        <Label fx:id="player1P" alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="50.0" text="p x" />
+                        <TextField fx:id="player1TextField" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="47.0" />
+                        <Label fx:id="player1N" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="41.0" text="= n" />
+                        <Button fx:id="player1GoButton" mnemonicParsing="false" onMouseClicked="#onGo1Clicked" prefHeight="35.0" prefWidth="59.0" text="Go" />
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+            <VBox layoutX="10.0" layoutY="10.0" prefHeight="290.0" prefWidth="191.0">
+               <children>
+                  <HBox prefHeight="45.0" prefWidth="181.0">
+                     <children>
+                        <Label fx:id="player2Label" alignment="CENTER" prefHeight="45.0" prefWidth="105.0" text="Player 2:" textAlignment="CENTER" textFill="BLUE">
+                           <font>
+                              <Font name="System Bold Italic" size="16.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="player2Type" alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="45.0" prefWidth="95.0" textAlignment="CENTER" textFill="AQUA">
+                           <font>
+                              <Font name="System Bold Italic" size="16.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <ListView fx:id="player2List" prefHeight="228.0" prefWidth="181.0" />
+                  <HBox fillHeight="false" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="44.0" prefWidth="232.0">
+                     <children>
+                        <Label fx:id="player2P" alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="49.0" text="p x" />
+                        <TextField fx:id="player2TextField" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="47.0" />
+                        <Label fx:id="player2N" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="41.0" text="= n" />
+                        <Button fx:id="player2GoButton" mnemonicParsing="false" onMouseClicked="#onGo2Clicked" prefHeight="35.0" prefWidth="59.0" text="Go" />
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+      <HBox layoutX="14.0" layoutY="354.0" prefHeight="36.0" prefWidth="360.0" spacing="10.0">
+         <children>
+            <Label prefHeight="36.0" prefWidth="87.0" text="p: ">
+               <font>
+                  <Font name="System Bold" size="30.0" />
+               </font>
+            </Label>
+            <Label fx:id="pValue" layoutX="10.0" layoutY="10.0" prefHeight="36.0" prefWidth="87.0">
+               <font>
+                  <Font name="System Bold" size="30.0" />
+               </font>
+            </Label>
+            <Label layoutX="97.0" layoutY="10.0" prefHeight="36.0" prefWidth="87.0" text="n:">
+               <font>
+                  <Font name="System Bold" size="30.0" />
+               </font>
+            </Label>
+            <Label fx:id="nValue" layoutX="184.0" layoutY="10.0" prefHeight="36.0" prefWidth="87.0">
+               <font>
+                  <Font name="System Bold" size="30.0" />
+               </font>
+            </Label>
+         </children>
+      </HBox>
+   </children>
 </AnchorPane>
