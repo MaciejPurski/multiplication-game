@@ -17,7 +17,8 @@ public class AlgorithmAI {
 
         int alpha = MIN;
         for (GameState state: possibleStates) {
-            int value = minMax(state,false,--depth,alpha,MAX);
+            int value = minMax(state, false, depth-1, alpha, MAX);
+            //assign greater value to alpha
             if (value > alpha){
                 alpha = value;
                 nextMove = state;
@@ -49,9 +50,9 @@ public class AlgorithmAI {
         if (isMaximizingPlayer){
             int best = MIN;
             for (GameState state: possibleStates) {
-                int value = minMax(state,false,--levelsLeft,alpha,beta);
-                best = Math.max(best,value);
-                alpha = Math.max(alpha,best);
+                int value = minMax(state, false, levelsLeft-1, alpha, beta);
+                best = Math.max(best, value);
+                alpha = Math.max(alpha, best);
 
                 //cutting condition
                 if(beta <= alpha)
@@ -63,9 +64,9 @@ public class AlgorithmAI {
         else{
             int best = MAX;
             for (GameState state: possibleStates) {
-                int value = minMax(state,true,--levelsLeft,alpha,beta);
-                best = Math.min(best,value);
-                beta = Math.min(beta,best);
+                int value = minMax(state, true, levelsLeft-1, alpha, beta);
+                best = Math.min(best, value);
+                beta = Math.min(beta, best);
 
                 //cutting condition
                 if (beta <= alpha)
