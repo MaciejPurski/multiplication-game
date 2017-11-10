@@ -1,9 +1,7 @@
 package algorithm;
+import model.GameState;
 
 public class AlgorithmAI {
-    final static int MIN = -1000;
-    final static int MAX = 1000;
-
     /**
      * Method, which performs minMax to find next best move
      * @param currentState a root of a game tree
@@ -15,9 +13,9 @@ public class AlgorithmAI {
         GameState possibleStates[] = currentState.getPossibleStates();
         // we're on a root level, so we will maximize the values from our children-nodes
 
-        int alpha = MIN;
+        int alpha = Integer.MIN_VALUE;
         for (GameState state: possibleStates) {
-            int value = minMax(state, false, depth-1, alpha, MAX);
+            int value = minMax(state, false, depth-1, alpha, Integer.MAX_VALUE);
             //assign greater value to alpha
             if (value > alpha){
                 alpha = value;
@@ -40,15 +38,17 @@ public class AlgorithmAI {
      * @return value from min-max algorithm
      */
     private static int minMax(GameState currentState, boolean isMaximizingPlayer, int levelsLeft, int alpha, int beta) {
-        //once we've reached a leaf node, it's time to return
+        if(currentState.isGameEnded())
+            return currentState.valuate(isMaximizingPlayer);
+
         if (levelsLeft == 0)
-            return currentState.valuate();
+            return currentState.valuate(isMaximizingPlayer);
 
         //find possible moves
         GameState possibleStates[] = currentState.getPossibleStates();
 
         if (isMaximizingPlayer){
-            int best = MIN;
+            int best = Integer.MIN_VALUE;
             for (GameState state: possibleStates) {
                 int value = minMax(state, false, levelsLeft-1, alpha, beta);
                 best = Math.max(best, value);
@@ -62,7 +62,7 @@ public class AlgorithmAI {
         }
 
         else{
-            int best = MAX;
+            int best = Integer.MAX_VALUE;
             for (GameState state: possibleStates) {
                 int value = minMax(state, true, levelsLeft-1, alpha, beta);
                 best = Math.min(best, value);
