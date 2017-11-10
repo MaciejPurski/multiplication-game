@@ -51,7 +51,7 @@
                         <HBox fx:id="player1HBox" disable="true" prefHeight="100.0" prefWidth="200.0">
                            <children>
                               <Label prefHeight="64.0" prefWidth="113.0" text="Min-max depth:" />
-                              <TextField fx:id="player1Text" alignment="CENTER_RIGHT" prefHeight="38.0" prefWidth="41.0" text="0">
+                              <TextField fx:id="player1Text" alignment="CENTER_RIGHT" prefHeight="38.0" prefWidth="41.0" text="1">
                                  <HBox.margin>
                                     <Insets top="15.0" />
                                  </HBox.margin>
@@ -97,7 +97,7 @@
                         <HBox fx:id="player2HBox" disable="true" prefHeight="100.0" prefWidth="200.0">
                            <children>
                               <Label prefHeight="64.0" prefWidth="113.0" text="Min-max depth:" />
-                              <TextField fx:id="player2Text" alignment="CENTER_RIGHT" prefHeight="38.0" prefWidth="41.0" text="0">
+                              <TextField fx:id="player2Text" alignment="CENTER_RIGHT" prefHeight="38.0" prefWidth="41.0" text="1">
                                  <HBox.margin>
                                     <Insets top="15.0" />
                                  </HBox.margin>

@@ -19,19 +19,19 @@ public class GameView {
     private GameController gameController;
 
     @FXML
-    private Button newGameButton, restartButton, exitButton;
+    private Button newGameButton, restartButton, exitButton, goButton;
 
     @FXML
     private Label player1Label, player2Label, player1Type, player2Type;
 
     @FXML
-    private Label player1N, player2N, player1P, player2P, pValue, nValue;
+    private Label playerNP, playerP, pValue, nValue;
 
     @FXML
-    private TextField player1TextField, player2TextField;
+    private TextField playerTextField;
 
     public GameView() throws IOException {
-        gameController = new GameController();
+        gameController = new GameController(this);
     }
 
     @FXML
@@ -62,6 +62,7 @@ public class GameView {
     @FXML
     public void onRestartClicked() {
         System.out.println("Restart");
+        gameController.restart();
     }
 
     @FXML
@@ -71,16 +72,19 @@ public class GameView {
     }
 
     @FXML
-    public void onGo1Clicked() {
+    public void onGoClicked() {
+        if (playerTextField.getText().isEmpty())
+            return;
+        int x = Integer.parseInt(playerTextField.getText());
 
-    }
+        if (x <= 1)
+            return;
 
-    @FXML
-    void onGo2Clicked() {
-
+        gameController.makeMove(x);
     }
 
     public void updateUI() {
-
+        nValue.setText(Integer.toString(gameController.getN()));
+        pValue.setText(Integer.toString(gameController.getP()));
     }
 }

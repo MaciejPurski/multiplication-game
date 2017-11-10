@@ -8,7 +8,7 @@ public class AlgorithmAI {
      * @param depth depth of min-max search
      * @return next move to perform
      * */
-    private GameState bestMove(GameState currentState, int depth){
+    public static GameState bestMove(GameState currentState, int depth) {
         GameState nextMove = null;
         GameState possibleStates[] = currentState.getPossibleStates();
         // we're on a root level, so we will maximize the values from our children-nodes
@@ -16,6 +16,7 @@ public class AlgorithmAI {
         int alpha = Integer.MIN_VALUE;
         for (GameState state: possibleStates) {
             int value = minMax(state, false, depth-1, alpha, Integer.MAX_VALUE);
+
             //assign greater value to alpha
             if (value > alpha){
                 alpha = value;
@@ -38,7 +39,7 @@ public class AlgorithmAI {
      * @return value from min-max algorithm
      */
     private static int minMax(GameState currentState, boolean isMaximizingPlayer, int levelsLeft, int alpha, int beta) {
-        if(currentState.isGameEnded())
+        if(currentState.isTerminated())
             return currentState.valuate(isMaximizingPlayer);
 
         if (levelsLeft == 0)
@@ -47,10 +48,11 @@ public class AlgorithmAI {
         //find possible moves
         GameState possibleStates[] = currentState.getPossibleStates();
 
-        if (isMaximizingPlayer){
+        if (isMaximizingPlayer) {
             int best = Integer.MIN_VALUE;
             for (GameState state: possibleStates) {
-                int value = minMax(state, false, levelsLeft-1, alpha, beta);
+                int value = minMax(state, false, levelsLeft - 1, alpha, beta);
+
                 best = Math.max(best, value);
                 alpha = Math.max(alpha, best);
 
@@ -61,10 +63,11 @@ public class AlgorithmAI {
             return best;
         }
 
-        else{
+        else {
             int best = Integer.MAX_VALUE;
             for (GameState state: possibleStates) {
-                int value = minMax(state, true, levelsLeft-1, alpha, beta);
+                int value = minMax(state, true, levelsLeft - 1, alpha, beta);
+
                 best = Math.min(best, value);
                 beta = Math.min(beta, best);
 

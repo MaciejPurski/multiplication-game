@@ -7,8 +7,6 @@ public class GameState extends algorithm.GameState {
     private int n;
     private int p;
     private int[] x;
-    private State gameState;
-
 
     public GameState(int n, int p, int[] x) throws Exception {
         if (p >= n)
@@ -16,21 +14,19 @@ public class GameState extends algorithm.GameState {
         this.n = n;
         this.p = p;
         this.x = x;
-        gameState = State.PLAYER_1_MOVE;
     }
 
     public GameState(GameState other) {
         n = other.n;
         p = other.p;
         x = other.x;
-        gameState = other.gameState;
     }
 
-    private int minX(){
+    public int minX(){
         return x[0];
     }
 
-    private int maxX(){
+    public int maxX(){
         return x[x.length-1];
     }
 
@@ -41,7 +37,7 @@ public class GameState extends algorithm.GameState {
      * @param isMaximizingState boolean that indicates who would perform next move from given GameState
      */
     public int valuate(boolean isMaximizingState) {
-        if(this.isGameEnded()){
+        if(this.isTerminated()){
             if(isMaximizingState)
                 return Integer.MIN_VALUE;// MIN_VALUE because it's a state reached after opponent's decision. If it's terminal it means that we lose.
             else
@@ -71,10 +67,7 @@ public class GameState extends algorithm.GameState {
     GameState nextState(int x) {
         GameState result = new GameState(this);
         result.p *= x;
-        if (result.p >= n)
-            result.endGame();
-        else
-            result.changePlayer();
+
         return result;
     }
 
@@ -97,22 +90,8 @@ public class GameState extends algorithm.GameState {
      *
      * @return true if game is ended
      */
-    public boolean isGameEnded() {
-        return gameState == State.PLAYER_1_WIN || gameState == State.PLAYER_2_WIN;
-    }
-
-    private void changePlayer() {
-        if (gameState == State.PLAYER_1_MOVE)
-            gameState = State.PLAYER_2_MOVE;
-        else
-            gameState = State.PLAYER_1_MOVE;
-    }
-
-    private void endGame() {
-        if (gameState == State.PLAYER_1_MOVE)
-            gameState = State.PLAYER_1_WIN;
-        else
-            gameState = State.PLAYER_2_WIN;
+    public boolean isTerminated() {
+        return p >= n;
     }
 
     public int getN() {
@@ -127,19 +106,12 @@ public class GameState extends algorithm.GameState {
         return x;
     }
 
-    public State getGameState() {
-        return gameState;
-    }
-
     @Override
     public String toString() {
         return "GameState{" +
-                "gameState=" + gameState +
                 ", n=" + n +
                 ", p=" + p +
                 ", x=" + Arrays.toString(x) +
                 '}';
     }
-
-    enum State {PLAYER_1_MOVE, PLAYER_2_MOVE, PLAYER_1_WIN, PLAYER_2_WIN}
 }

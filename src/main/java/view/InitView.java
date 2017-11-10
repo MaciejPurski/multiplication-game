@@ -25,13 +25,16 @@ public class InitView {
     @FXML
     public void onStartClicked(MouseEvent event) {
         //TODO: handle wrong values
-        gameController.initGame(gameView, Integer.parseInt(pTextField.getText()), Integer.parseInt(nTextField.getText()),
+        gameController.initGame(Integer.parseInt(pTextField.getText()), Integer.parseInt(nTextField.getText()),
                                 Integer.parseInt(xTextField.getText()));
 
         if (!player1Human.isSelected() || !player2Human.isSelected()) {
             gameController.initAI(player1Human.isSelected(), player2Human.isSelected(), Integer.parseInt(player1Text.getText()),
                                   Integer.parseInt(player2Text.getText()));
         }
+        gameController.startGame();
+
+        gameView.updateUI();
 
         Stage dialog = (Stage) ((Node) event.getTarget()).getScene().getWindow();
         dialog.close();
