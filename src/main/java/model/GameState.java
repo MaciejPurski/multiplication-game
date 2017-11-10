@@ -26,13 +26,40 @@ public class GameState extends algorithm.GameState {
         gameState = other.gameState;
     }
 
+    private int minX(){
+        return x[0];
+    }
+
+    private int maxX(){
+        return x[x.length-1];
+    }
+
     /**
      * Method used to valuate given GameState.
      *
      * @return Valuation of given GameState - the higher, the better
+     * @param isMaximizingState boolean that indicates who would perform next move from given GameState
      */
-    public int valuate() {
-        return 0;
+    public int valuate(boolean isMaximizingState) {
+        if(this.isGameEnded()){
+            if(isMaximizingState)
+                return Integer.MIN_VALUE;// MIN_VALUE because it's a state reached after opponent's decision. If it's terminal it means that we lose.
+            else
+                return Integer.MAX_VALUE;
+        }
+        else{
+            double n = (double)this.getN();
+            double p = (double)this.getP();
+            int toVictory = (int)(Math.ceil(n/p));
+            if((toVictory >= this.minX()) && (toVictory <= this.maxX())){ //somebody can achieve victory from this state
+                if(isMaximizingState)
+                    return Integer.MAX_VALUE - toVictory;
+                else
+                    return Integer.MIN_VALUE + toVictory;
+            }
+            else
+                return toVictory;
+        }
     }
 
     /**
@@ -70,7 +97,7 @@ public class GameState extends algorithm.GameState {
      *
      * @return true if game is ended
      */
-    boolean isGameEnded() {
+    public boolean isGameEnded() {
         return gameState == State.PLAYER_1_WIN || gameState == State.PLAYER_2_WIN;
     }
 
@@ -80,7 +107,6 @@ public class GameState extends algorithm.GameState {
         else
             gameState = State.PLAYER_1_MOVE;
     }
-
 
     private void endGame() {
         if (gameState == State.PLAYER_1_MOVE)
