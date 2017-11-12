@@ -1,21 +1,22 @@
 package controller;
 
 import algorithm.AlgorithmAI;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import model.GameModel;
+import model.GameModel.State;
+import model.Player.Character;
 import view.GameView;
-
-import java.util.concurrent.CountDownLatch;
 
 public class GameController {
 
     private GameModel gameModel;
-    private boolean isUsingAI;
     private GameView gameView;
     private int prev_p;
     private int prev_n;
     private int prev_x;
-    private int[] treeDepth;
-    private boolean[] isHumanPlayer;
+    private SimpleObjectProperty<State> currentState;
 
     public GameController(GameView gameView) {
         this.gameView = gameView;
@@ -26,7 +27,7 @@ public class GameController {
         // temporary code
         int tab[] = new int[x];
         for (int i = 1; i <= x; i++)
-            tab[i - 1] = i;
+            tab[i - 1] = i+1;//begins with 2 instead 1
 
         try {
             gameModel.initGame(n, p, tab);
@@ -36,25 +37,57 @@ public class GameController {
         prev_n = n;
         prev_p = p;
         prev_x = x;
+        currentState = new SimpleObjectProperty<>(State.INIT);
+    }
+
+    public void initPlayer1(boolean isHuman, int AIDepth){
+        this.gameModel.initPlayer1(isHuman,AIDepth);
+    }
+
+    public void initPlayer2(boolean isHuman, int AIDepth){
+        this.gameModel.initPlayer2(isHuman, AIDepth);
+    }
+
+    public void addStateListener(){
+        this.currentState.addListener(new ChangeListener<State>() {
+            @Override
+            public void changed(ObservableValue<? extends State> observable, State oldValue, State newValue) {
+                if(newValue == State.PLAYER_1_WIN || newValue == State.PLAYER_2_WIN)
+                    System.out.println("Ktoś tam wygrał");
+                if(newValue == State.PLAYER_1_MOVE || newValue == State.PLAYER_2_MOVE){
+                    if(gameModel.getCurrentPlayer().getPchar() == Character.HUMAN)
+                        return;
+                    else
+                        makeAIMove(gameModel.getCurrentPlayer().getAIDepth());
+                }
+            }
+        });
     }
 
     public void restart() {
         initGame(prev_p, prev_n, prev_x);
-        startGame();
         gameView.updateUI();
+        startGame();
     }
 
-    public int initAI(boolean isHumanPlayer1, boolean isHumanPlayer2, int treeDepth1, int treeDepth2) {
-        if (treeDepth1 < 0 || treeDepth2 < 0)
-            return -1;
+    public void startGame() {
+        this.gameModel.initCurrent();
+        addStateListener();
+        updateState();
+    }
 
-        if (!isUsingAI) {
-            isUsingAI = true;
-            isHumanPlayer = new boolean [] {isHumanPlayer1, isHumanPlayer2};
-            treeDepth = new int [] {treeDepth1, treeDepth2};
+    public void makeAIMove(int depth){
+        System.out.println("AI");
+        gameModel.setState(AlgorithmAI.bestMove(gameModel.getState(), depth));
+        System.out.printf("%d\n", gameModel.getState().getP());
+        gameView.updateUI();
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
+        updateState();
 
-        return 0;
     }
 
     public void makeMove(int x) {
@@ -63,17 +96,12 @@ public class GameController {
         if (x < gameModel.getState().minX() || x > gameModel.getState().maxX())
             return;
         gameModel.makeMove(x);
-
-        if (isUsingAI) {
-            System.out.println("AI");
-            gameModel.setState(AlgorithmAI.bestMove(gameModel.getState(), treeDepth[1]));
-            System.out.printf("%d\n", gameModel.getState().getP());
-        }
         gameView.updateUI();
+        updateState();
     }
 
-    public void startGame() {
-        // call AI
+    private void updateState(){
+        this.currentState.set(gameModel.getCurrentMove());
     }
 
     public int getP() {
