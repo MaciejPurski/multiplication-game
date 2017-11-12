@@ -38,16 +38,18 @@ public class GameState extends algorithm.GameState {
      */
     public int valuate(boolean isMaximizingState) {
         if(this.isTerminated()){
-            if(isMaximizingState)
+            if(isMaximizingState) {
                 return Integer.MIN_VALUE;// MIN_VALUE because it's a state reached after opponent's decision. If it's terminal it means that we lose.
-            else
+            }
+            else {
                 return Integer.MAX_VALUE;
+            }
         }
         else{
             double n = (double)this.getN();
             double p = (double)this.getP();
             int toVictory = (int)(Math.ceil(n/p));
-            if((toVictory >= this.minX()) && (toVictory <= this.maxX())){ //somebody can achieve victory from this state
+            if(toVictory <= this.maxX()){ //somebody can achieve victory from this state
                 if(isMaximizingState)
                     return Integer.MAX_VALUE - toVictory;
                 else

@@ -9,14 +9,13 @@ public class AlgorithmAI {
      * @return next move to perform
      * */
     public static GameState bestMove(GameState currentState, int depth) {
-        GameState nextMove = null;
         GameState possibleStates[] = currentState.getPossibleStates();
+        GameState nextMove = possibleStates[0];
         // we're on a root level, so we will maximize the values from our children-nodes
 
         int alpha = Integer.MIN_VALUE;
         for (GameState state: possibleStates) {
             int value = minMax(state, false, depth-1, alpha, Integer.MAX_VALUE);
-
             //assign greater value to alpha
             if (value > alpha){
                 alpha = value;

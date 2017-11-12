@@ -28,10 +28,16 @@ public class InitView {
         gameController.initGame(Integer.parseInt(pTextField.getText()), Integer.parseInt(nTextField.getText()),
                                 Integer.parseInt(xTextField.getText()));
 
-        if (!player1Human.isSelected() || !player2Human.isSelected()) {
-            gameController.initAI(player1Human.isSelected(), player2Human.isSelected(), Integer.parseInt(player1Text.getText()),
-                                  Integer.parseInt(player2Text.getText()));
-        }
+        if(!player1Human.isSelected())
+            gameController.initPlayer1(false, Integer.parseInt(player1Text.getText()));
+        else
+            gameController.initPlayer1(true, 0);
+
+        if(!player2Human.isSelected())
+            gameController.initPlayer2(false, Integer.parseInt(player2Text.getText()));
+        else
+            gameController.initPlayer2(true, 0);
+
         gameController.startGame();
 
         gameView.updateUI();
