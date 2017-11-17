@@ -3,8 +3,7 @@ package model;
 public class GameModel {
     private GameState gameState;
     private State currentMove;
-    private Player player1;
-    private Player player2;
+    private Player[] players;
     private Player currentPlayer;
 
     public void initGame(int n, int p, int[] x) throws Exception{
@@ -13,24 +12,18 @@ public class GameModel {
     }
 
     public GameModel() {
+        players = new Player[2];
     }
 
-    public void initPlayer1(boolean isHuman, int AIDepth){
+    public void initPlayer(int index, boolean isHuman, int AIDepth){
         if(isHuman)
-            this.player1 = new Player();
+            this.players[index] = new Player();
         else
-            this.player1 = new Player(AIDepth);
-    }
-
-    public void initPlayer2(boolean isHuman, int AIDepth){
-        if(isHuman)
-            this.player2 = new Player();
-        else
-            this.player2 = new Player(AIDepth);
+            this.players[index] = new Player(AIDepth);
     }
 
     public void initCurrent(){
-        this.currentPlayer = this.player1;
+        this.currentPlayer = this.players[0];
     }
 
     private void updateGameState() {
@@ -39,14 +32,14 @@ public class GameModel {
                 currentMove = State.PLAYER_1_WIN;
             else {
                 currentMove = State.PLAYER_2_MOVE;
-                currentPlayer = player2;
+                currentPlayer = players[1];
             }
         } else {
             if (gameState.isTerminated())
                 currentMove = State.PLAYER_2_WIN;
             else {
                 currentMove = State.PLAYER_1_MOVE;
-                currentPlayer = player1;
+                currentPlayer = players[0];
             }
         }
     }
@@ -66,12 +59,8 @@ public class GameModel {
         updateGameState();
     }
 
-    public Player getPlayer1() {
-        return player1;
-    }
-
-    public Player getPlayer2() {
-        return player2;
+    public boolean isAnyAI() {
+        return (!(this.players[0].isHuman()) || !(this.players[1].isHuman()));
     }
 
     public Player getCurrentPlayer() {

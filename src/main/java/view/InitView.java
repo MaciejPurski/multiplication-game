@@ -27,23 +27,19 @@ public class InitView {
         //TODO: handle wrong values
         gameController.initGame(Integer.parseInt(pTextField.getText()), Integer.parseInt(nTextField.getText()),
                                 Integer.parseInt(xTextField.getText()));
-
         if(!player1Human.isSelected())
-            gameController.initPlayer1(false, Integer.parseInt(player1Text.getText()));
+            gameController.initPlayer(0,false, Integer.parseInt(player1Text.getText()));
         else
-            gameController.initPlayer1(true, 0);
+            gameController.initPlayer(0,true, 0);
 
         if(!player2Human.isSelected())
-            gameController.initPlayer2(false, Integer.parseInt(player2Text.getText()));
+            gameController.initPlayer(1,false, Integer.parseInt(player2Text.getText()));
         else
-            gameController.initPlayer2(true, 0);
-
-        gameController.startGame();
-
-        gameView.updateUI();
-
+            gameController.initPlayer(1,true, 0);
         Stage dialog = (Stage) ((Node) event.getTarget()).getScene().getWindow();
         dialog.close();
+        gameView.updateUI();
+        gameController.startGame();
     }
 
     @FXML

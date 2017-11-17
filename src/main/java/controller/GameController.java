@@ -1,12 +1,10 @@
 package controller;
 
-import algorithm.AlgorithmAI;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import model.GameModel;
 import model.GameModel.State;
-import model.Player.Character;
 import view.GameView;
 
 public class GameController {
@@ -17,10 +15,14 @@ public class GameController {
     private int prev_n;
     private int prev_x;
     private SimpleObjectProperty<State> currentState;
+    private AIService aiserv;
 
     public GameController(GameView gameView) {
         this.gameView = gameView;
         gameModel = new GameModel();
+        currentState = new SimpleObjectProperty<>(State.INIT);
+        addStateListener();
+        initAIService();
     }
 
     public void initGame(int p, int n, int x) {
@@ -37,15 +39,10 @@ public class GameController {
         prev_n = n;
         prev_p = p;
         prev_x = x;
-        currentState = new SimpleObjectProperty<>(State.INIT);
     }
 
-    public void initPlayer1(boolean isHuman, int AIDepth){
-        this.gameModel.initPlayer1(isHuman,AIDepth);
-    }
-
-    public void initPlayer2(boolean isHuman, int AIDepth){
-        this.gameModel.initPlayer2(isHuman, AIDepth);
+    public void initPlayer(int index, boolean isHuman, int AIDepth){
+        this.gameModel.initPlayer(index, isHuman, AIDepth);
     }
 
     public void addStateListener(){
@@ -55,11 +52,24 @@ public class GameController {
                 if(newValue == State.PLAYER_1_WIN || newValue == State.PLAYER_2_WIN)
                     System.out.println("Ktoś tam wygrał");
                 if(newValue == State.PLAYER_1_MOVE || newValue == State.PLAYER_2_MOVE){
-                    if(gameModel.getCurrentPlayer().getPchar() == Character.HUMAN)
+                    if(gameModel.getCurrentPlayer().isHuman())
                         return;
                     else
-                        makeAIMove(gameModel.getCurrentPlayer().getAIDepth());
+                        makeAIMove();
                 }
+            }
+        });
+    }
+
+    public void initAIService(){
+        this.aiserv = new AIService();
+        this.aiserv.valueProperty().addListener((observable, oldValue, newValue) -> {
+            if(newValue != null){
+                System.out.println("AI");
+                this.gameModel.setState(newValue);
+                System.out.printf("%d\n", gameModel.getState().getP());
+                gameView.updateUI();
+                updateState();
             }
         });
     }
@@ -72,22 +82,13 @@ public class GameController {
 
     public void startGame() {
         this.gameModel.initCurrent();
-        addStateListener();
         updateState();
     }
 
-    public void makeAIMove(int depth){
-        System.out.println("AI");
-        gameModel.setState(AlgorithmAI.bestMove(gameModel.getState(), depth));
-        System.out.printf("%d\n", gameModel.getState().getP());
-        gameView.updateUI();
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        updateState();
-
+    public void makeAIMove(){
+        this.aiserv.setState(this.gameModel.getState());
+        this.aiserv.setAIDepth(this.gameModel.getCurrentPlayer().getAIDepth());
+        this.aiserv.restart();
     }
 
     public void makeMove(int x) {

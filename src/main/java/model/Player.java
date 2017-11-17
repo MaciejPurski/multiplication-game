@@ -19,8 +19,8 @@ public class Player {
         return AIDepth;
     }
 
-    public Character getPchar() {
-        return pchar;
+    public boolean isHuman(){
+        return this.pchar == Character.HUMAN;
     }
 
     public enum Character {HUMAN, AI}
