@@ -13,4 +13,6 @@ public abstract class GameState {
      * @return array of possible states
      */
     public abstract GameState[] getPossibleStates();
+
+    public abstract boolean isTerminated();
 }

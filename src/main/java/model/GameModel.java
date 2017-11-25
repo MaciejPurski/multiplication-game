@@ -1,7 +1,7 @@
 package model;
 
 public class GameModel {
-    private GameState gameState;
+    private MultiGameState gameState;
     private State currentMove;
     private Player[] players;
     private Player currentPlayer;
@@ -9,7 +9,7 @@ public class GameModel {
     private int lastPValue;
 
     public void initGame(int n, int p, int[] x) throws Exception{
-        gameState = new GameState(n, p, x);
+        gameState = new MultiGameState(n, p, x);
         currentMove = State.PLAYER_1_MOVE;
     }
 
@@ -56,12 +56,12 @@ public class GameModel {
         lastXValue = x;
     }
 
-    public GameState getState() {
+    public MultiGameState getState() {
         return gameState;
     }
 
 
-    public void setState(GameState nState) {
+    public void setState(MultiGameState nState) {
         lastPValue = gameState.getP();
         lastXValue = nState.getP() / gameState.getP();
         gameState = nState;
@@ -97,5 +97,4 @@ public class GameModel {
     public int getLastPValue(){
         return lastPValue;
     }
-
 }

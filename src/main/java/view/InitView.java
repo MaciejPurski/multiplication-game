@@ -5,6 +5,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
@@ -15,8 +16,8 @@ import javafx.stage.Stage;
 import java.util.Arrays;
 
 public class InitView {
-    GameView gameView;
-    GameController gameController;
+    private GameView gameView;
+    private GameController gameController;
 
     @FXML
     private RadioButton player1Human, player2Human;
@@ -28,6 +29,9 @@ public class InitView {
     private HBox player1HBox, player2HBox;
 
     @FXML
+    private Button startButton;
+
+    @FXML
     private ListView xListView;
 
     ObservableList<Integer> items = FXCollections.observableArrayList();
@@ -35,17 +39,18 @@ public class InitView {
     @FXML
     public void onStartClicked(MouseEvent event) {
         //TODO: handle wrong values
-        gameController.initGame(Integer.parseInt(pTextField.getText()), Integer.parseInt(nTextField.getText()),
-                                Arrays.stream(items.toArray(new Integer[items.size()])).mapToInt(Integer::intValue).toArray());
-        if(!player1Human.isSelected())
-            gameController.initPlayer(0,false, Integer.parseInt(player1Text.getText()));
-        else
-            gameController.initPlayer(0,true, 0);
+        int pValue = Integer.parseInt(pTextField.getText());
+        int nValue = Integer.parseInt(nTextField.getText());
 
-        if(!player2Human.isSelected())
-            gameController.initPlayer(1,false, Integer.parseInt(player2Text.getText()));
-        else
-            gameController.initPlayer(1,true, 0);
+        if (pValue <= 0 || nValue <= pValue)
+            return;
+
+        gameController.initGame(pValue, nValue,
+                                Arrays.stream(items.toArray(new Integer[items.size()])).mapToInt(Integer::intValue).toArray());
+
+        gameController.initPlayer(0,player1Human.isSelected(), Integer.parseInt(player1Text.getText()));
+        gameController.initPlayer(1,player2Human.isSelected(), Integer.parseInt(player2Text.getText()));
+
         Stage dialog = (Stage) ((Node) event.getTarget()).getScene().getWindow();
         dialog.close();
         gameView.updateUI();
@@ -81,12 +86,16 @@ public class InitView {
 
     @FXML
     public void onAddClicked(MouseEvent event){
-        //  xListView = new ListView<String>();
-        if(!items.contains(Integer.parseInt(xTextField.getText()))) {
+        int nItem = Integer.parseInt(xTextField.getText());
+
+        if(!items.contains(nItem) && nItem > 1) {
             items.add(Integer.parseInt(xTextField.getText()));
             items.sort( null);
             xListView.setItems(items);
         }
+
+        if (!items.isEmpty())
+            startButton.setDisable(false);
     }
 
     void setGameView(GameView gameView) { this.gameView = gameView; }

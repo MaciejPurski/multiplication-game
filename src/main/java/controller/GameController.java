@@ -4,7 +4,8 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import model.GameModel;
-import model.GameModel.State;
+import model.GameModel.*;
+import model.MultiGameState;
 import view.GameView;
 
 public class GameController {
@@ -63,7 +64,7 @@ public class GameController {
         this.aiserv.valueProperty().addListener((observable, oldValue, newValue) -> {
             if(newValue != null){
                 System.out.println("AI");
-                this.gameModel.setState(newValue);
+                this.gameModel.setState((MultiGameState) newValue);
                 System.out.printf("%d\n", gameModel.getState().getP());
                 gameView.updateUI();
                 updateState();

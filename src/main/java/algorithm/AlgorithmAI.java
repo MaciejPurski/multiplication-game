@@ -1,5 +1,4 @@
 package algorithm;
-import model.GameState;
 
 public class AlgorithmAI {
     /**

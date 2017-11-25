@@ -1,16 +1,17 @@
 package controller;
 
-import algorithm.AlgorithmAI;
+import algorithm.*;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
-import model.GameState;
+import model.MultiGameState;
+
 
 public class AIService extends Service<GameState> {
 
     private GameState state;
     private int AIDepth;
 
-    public void setState(GameState state) {
+    public void setState(MultiGameState state) {
         this.state = state;
     }
 

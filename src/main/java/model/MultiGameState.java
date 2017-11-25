@@ -1,22 +1,22 @@
 package model;
 
 
+import algorithm.GameState;
+
 import java.util.Arrays;
 
-public class GameState extends algorithm.GameState {
+public class MultiGameState extends GameState {
     private int n;
     private int p;
     private int[] x;
 
-    public GameState(int n, int p, int[] x) throws Exception {
-        if (p >= n)
-            throw new Exception("Wrong starting values!!! (p>=n)");
+    public MultiGameState(int n, int p, int[] x) {
         this.n = n;
         this.p = p;
         this.x = x;
     }
 
-    public GameState(GameState other) {
+    public MultiGameState(MultiGameState other) {
         n = other.n;
         p = other.p;
         x = other.x;
@@ -66,8 +66,8 @@ public class GameState extends algorithm.GameState {
      * @param x multiplier
      * @return State of game after multiplying by x
      */
-    GameState nextState(int x) {
-        GameState result = new GameState(this);
+    MultiGameState nextState(int x) {
+        MultiGameState result = new MultiGameState(this);
         result.p *= x;
 
 
@@ -80,8 +80,8 @@ public class GameState extends algorithm.GameState {
      *
      * @return array of possible states
      */
-    public GameState[] getPossibleStates() {
-        GameState[] result = new GameState[x.length];
+    public MultiGameState[] getPossibleStates() {
+        MultiGameState[] result = new MultiGameState[x.length];
         for (int i = 0; i < x.length; ++i) {
             result[i] = nextState(x[i]);
         }
@@ -117,12 +117,4 @@ public class GameState extends algorithm.GameState {
                 ", x=" + Arrays.toString(x) +
                 '}';
     }
-
-//    public int getLastXValue(){
-//        return lastXValue;
-//    }
-//
-//    public int getLastPValue(){
-//        return lastPValue;
-//    }
 }
