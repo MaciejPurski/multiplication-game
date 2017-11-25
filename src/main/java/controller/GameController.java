@@ -13,7 +13,7 @@ public class GameController {
     private GameView gameView;
     private int prev_p;
     private int prev_n;
-    private int prev_x;
+    private int[] prev_x;
     private SimpleObjectProperty<State> currentState;
     private AIService aiserv;
 
@@ -25,14 +25,10 @@ public class GameController {
         initAIService();
     }
 
-    public void initGame(int p, int n, int x) {
-        // temporary code
-        int tab[] = new int[x];
-        for (int i = 1; i <= x; i++)
-            tab[i - 1] = i+1;//begins with 2 instead 1
+    public void initGame(int p, int n, int[] x) {
 
         try {
-            gameModel.initGame(n, p, tab);
+            gameModel.initGame(n, p, x);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -50,7 +46,8 @@ public class GameController {
             @Override
             public void changed(ObservableValue<? extends State> observable, State oldValue, State newValue) {
                 if(newValue == State.PLAYER_1_WIN || newValue == State.PLAYER_2_WIN)
-                    System.out.println("Ktoś tam wygrał");
+                   gameView.showEndOfGameInfo();
+                    // System.out.println("Ktoś tam wygrał");
                 if(newValue == State.PLAYER_1_MOVE || newValue == State.PLAYER_2_MOVE){
                     if(gameModel.getCurrentPlayer().isHuman())
                         return;
@@ -70,6 +67,8 @@ public class GameController {
                 System.out.printf("%d\n", gameModel.getState().getP());
                 gameView.updateUI();
                 updateState();
+
+                gameView.addLastMoveToHistory();
             }
         });
     }
@@ -99,6 +98,7 @@ public class GameController {
         gameModel.makeMove(x);
         gameView.updateUI();
         updateState();
+        gameView.addLastMoveToHistory();
     }
 
     private void updateState(){
@@ -113,11 +113,19 @@ public class GameController {
         return gameModel.getState().getN();
     }
 
+    public int[] getX() {
+        return gameModel.getX();
+    }
+
     public GameModel getModel() {
         return gameModel;
     }
 
     public GameView getGameView() {
         return gameView;
+    }
+
+    public String lastMoveToString(){
+        return gameModel.getLastPValue() + " * " + gameModel.getLastXValue() + " = " + gameModel.getState().getP();
     }
 }

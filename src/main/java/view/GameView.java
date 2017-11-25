@@ -1,6 +1,8 @@
 package view;
 
 import controller.GameController;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -8,10 +10,13 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Paint;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import model.GameModel;
 
 import java.io.IOException;
 
@@ -29,6 +34,11 @@ public class GameView {
 
     @FXML
     private TextField playerTextField;
+
+    @FXML
+    private ListView xListView, player1List, player2List;
+
+    ObservableList<String> player1HistoryList, player2HistoryList;
 
     public GameView() throws IOException {
         gameController = new GameController(this);
@@ -63,6 +73,7 @@ public class GameView {
     public void onRestartClicked() {
         System.out.println("Restart");
         gameController.restart();
+        initializePlayersHistoryLists();
     }
 
     @FXML
@@ -73,9 +84,7 @@ public class GameView {
 
     @FXML
     public void onGoClicked() {
-        if (playerTextField.getText().isEmpty())
-            return;
-        int x = Integer.parseInt(playerTextField.getText());
+        int x = Integer.parseInt(xListView.getSelectionModel().getSelectedItem().toString());
 
         if (x <= 1)
             return;
@@ -86,5 +95,50 @@ public class GameView {
     public void updateUI() {
         nValue.setText(Integer.toString(gameController.getN()));
         pValue.setText(Integer.toString(gameController.getP()));
+
+        ObservableList<Integer> items = FXCollections.observableArrayList();
+        for(int x: gameController.getX())
+            items.add(new Integer(x));
+        xListView.setItems(items);
+
+        if(getCurrentMove().equals(GameModel.State.PLAYER_1_MOVE)){
+            player1Label.setUnderline(true);
+            player2Label.setUnderline(false);
+        }
+        else if(getCurrentMove().equals(GameModel.State.PLAYER_2_MOVE)){
+            player1Label.setUnderline(false);
+            player2Label.setUnderline(true);
+        }
+        else {
+            player1Label.setUnderline(false);
+            player2Label.setUnderline(false);
+        }
+
+    }
+
+    private GameModel.State getCurrentMove(){
+        return gameController.getModel().getCurrentMove();
+    }
+
+    public void initializePlayersHistoryLists(){
+        player1HistoryList = FXCollections.observableArrayList();
+        player2HistoryList = FXCollections.observableArrayList();
+        player1List.setItems(player1HistoryList);
+        player2List.setItems(player2HistoryList);
+    }
+
+    public void addLastMoveToHistory(){
+        if(getCurrentMove().equals(GameModel.State.PLAYER_2_MOVE) || getCurrentMove().equals(GameModel.State.PLAYER_1_WIN)){
+            player1HistoryList.add(gameController.lastMoveToString());
+        }
+        else
+            player2HistoryList.add(gameController.lastMoveToString());
+    }
+
+    public void showEndOfGameInfo(){
+        if(getCurrentMove().equals(GameModel.State.PLAYER_1_WIN) || getCurrentMove().equals(GameModel.State.PLAYER_2_WIN)){
+            player1HistoryList.add(getCurrentMove().toString());
+            player2HistoryList.add(getCurrentMove().toString());
+        }
     }
 }

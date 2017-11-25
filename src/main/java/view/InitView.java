@@ -1,13 +1,18 @@
 package view;
 
 import controller.GameController;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.control.ListView;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
+
+import java.util.Arrays;
 
 public class InitView {
     GameView gameView;
@@ -23,10 +28,15 @@ public class InitView {
     private HBox player1HBox, player2HBox;
 
     @FXML
+    private ListView xListView;
+
+    ObservableList<Integer> items = FXCollections.observableArrayList();
+
+    @FXML
     public void onStartClicked(MouseEvent event) {
         //TODO: handle wrong values
         gameController.initGame(Integer.parseInt(pTextField.getText()), Integer.parseInt(nTextField.getText()),
-                                Integer.parseInt(xTextField.getText()));
+                                Arrays.stream(items.toArray(new Integer[items.size()])).mapToInt(Integer::intValue).toArray());
         if(!player1Human.isSelected())
             gameController.initPlayer(0,false, Integer.parseInt(player1Text.getText()));
         else
@@ -40,6 +50,7 @@ public class InitView {
         dialog.close();
         gameView.updateUI();
         gameController.startGame();
+        gameView.initializePlayersHistoryLists();
     }
 
     @FXML
@@ -66,6 +77,16 @@ public class InitView {
     @FXML
     public void onAIPlayer2Clicked() {
         player2HBox.setDisable(false);
+    }
+
+    @FXML
+    public void onAddClicked(MouseEvent event){
+        //  xListView = new ListView<String>();
+        if(!items.contains(Integer.parseInt(xTextField.getText()))) {
+            items.add(Integer.parseInt(xTextField.getText()));
+            items.sort( null);
+            xListView.setItems(items);
+        }
     }
 
     void setGameView(GameView gameView) { this.gameView = gameView; }

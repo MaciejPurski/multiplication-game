@@ -5,6 +5,8 @@ public class GameModel {
     private State currentMove;
     private Player[] players;
     private Player currentPlayer;
+    private int lastXValue;
+    private int lastPValue;
 
     public void initGame(int n, int p, int[] x) throws Exception{
         gameState = new GameState(n, p, x);
@@ -13,6 +15,8 @@ public class GameModel {
 
     public GameModel() {
         players = new Player[2];
+        lastXValue = 0;
+        lastPValue = 0;
     }
 
     public void initPlayer(int index, boolean isHuman, int AIDepth){
@@ -45,8 +49,11 @@ public class GameModel {
     }
 
     public void makeMove(int x) {
+        lastPValue = gameState.getP();
         gameState = gameState.nextState(x);
         updateGameState();
+
+        lastXValue = x;
     }
 
     public GameState getState() {
@@ -55,6 +62,8 @@ public class GameModel {
 
 
     public void setState(GameState nState) {
+        lastPValue = gameState.getP();
+        lastXValue = nState.getP() / gameState.getP();
         gameState = nState;
         updateGameState();
     }
@@ -76,4 +85,17 @@ public class GameModel {
     }
 
     public enum State {PLAYER_1_MOVE, PLAYER_2_MOVE, PLAYER_1_WIN, PLAYER_2_WIN,INIT}
+
+    public int[] getX(){
+        return gameState.getX();
+    }
+
+    public int getLastXValue(){
+        return lastXValue;
+    }
+
+    public int getLastPValue(){
+        return lastPValue;
+    }
+
 }

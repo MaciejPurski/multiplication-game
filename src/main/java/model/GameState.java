@@ -70,6 +70,7 @@ public class GameState extends algorithm.GameState {
         GameState result = new GameState(this);
         result.p *= x;
 
+
         return result;
     }
 
@@ -116,4 +117,12 @@ public class GameState extends algorithm.GameState {
                 ", x=" + Arrays.toString(x) +
                 '}';
     }
+
+//    public int getLastXValue(){
+//        return lastXValue;
+//    }
+//
+//    public int getLastPValue(){
+//        return lastPValue;
+//    }
 }
