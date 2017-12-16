@@ -67,9 +67,8 @@ public class GameController {
                 this.gameModel.setState((MultiGameState) newValue);
                 System.out.printf("%d\n", gameModel.getState().getP());
                 gameView.updateUI();
-                updateState();
-
                 gameView.addLastMoveToHistory();
+                updateState();
             }
         });
     }
