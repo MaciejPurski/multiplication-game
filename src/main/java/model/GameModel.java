@@ -52,7 +52,6 @@ public class GameModel {
         lastPValue = gameState.getP();
         gameState = gameState.nextState(x);
         updateGameState();
-
         lastXValue = x;
     }
 
@@ -66,10 +65,6 @@ public class GameModel {
         lastXValue = nState.getP() / gameState.getP();
         gameState = nState;
         updateGameState();
-    }
-
-    public boolean isAnyAI() {
-        return (!(this.players[0].isHuman()) || !(this.players[1].isHuman()));
     }
 
     public Player getCurrentPlayer() {
@@ -96,5 +91,9 @@ public class GameModel {
 
     public int getLastPValue(){
         return lastPValue;
+    }
+
+    public Player getPlayer(int index){
+        return this.players[index];
     }
 }

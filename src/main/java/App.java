@@ -7,7 +7,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class App extends Application {
-    final String fxmlName = "Game.fxml";
+    final String fxmlName = "Main.fxml";
     final String windowTitle = "Multiplication Game";
 
     public static void main(String[] args) {
@@ -19,7 +19,6 @@ public class App extends Application {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlName));
         try {
             Parent root = loader.load();
-
             primaryStage.setTitle(windowTitle);
             primaryStage.setScene(new Scene(root));
             primaryStage.show();
