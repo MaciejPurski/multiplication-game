@@ -47,46 +47,46 @@ public class GameControllerTestClass {
     }
 
     public void initPlayer(int index, boolean isHuman, int AIDepth){
-        this.gameModel.initPlayer(index, isHuman, AIDepth);
+        gameModel.initPlayer(index, isHuman, AIDepth);
     }
 
     private void endOfGame(){
-        if(this.gameModel.getCurrentMove() == GameModel.State.PLAYER_1_WIN)
-            this.report.println("Wygrana gracza 1 "+" (N = "+this.prev_n+")");
+        if(gameModel.getCurrentMove() == GameModel.State.PLAYER_1_WIN)
+            report.println("Wygrana gracza 1 "+" (N = "+this.prev_n+")");
         else
-            this.report.println("Wygrana gracza 2 "+" (N = "+this.prev_n+")");
-        this.loopCounter--;
-        if(this.loopCounter > 0){
-            this.prev_n++;
-            this.restart();
-        }
-        else{
-            if(this.deepeningCount > 0){
-                this.report.close();
-                this.loopCounter = this.attemptsNumber;
-                this.prev_n = this.prev_n - this.attemptsNumber + 1;
+            report.println("Wygrana gracza 2 "+" (N = "+this.prev_n+")");
+        loopCounter--;
+        if (loopCounter > 0) {
+            prev_n++;
+            restart();
+        } else {
+            if (deepeningCount > 0) {
+                report.close();
+                loopCounter = attemptsNumber;
+                prev_n = prev_n - attemptsNumber + 1;
                 try {
-                    this.report = new PrintWriter(this.outFilename + this.outNumber + ".txt");
+                    report = new PrintWriter(outFilename + outNumber + ".txt");
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
+                    System.exit(1);
                 }
-                this.outNumber++;
-                this.deepeningCount--;
-                int oldDepth = this.gameModel.getPlayer(1).getAIDepth();
-                this.initPlayer(1, false, oldDepth + this.deepeningStep);
-                this.printReportHeader();
-                this.restart();
+                outNumber++;
+                deepeningCount--;
+                int oldDepth = gameModel.getPlayer(1).getAIDepth();
+                initPlayer(1, false, oldDepth + deepeningStep);
+                printReportHeader();
+                restart();
             }
             else {
-                this.report.close();
+                report.close();
                 System.exit(0);
             }
         }
     }
 
     public void setDeepening(int step, int count){
-        this.deepeningStep = step;
-        this.deepeningCount = count;
+        deepeningStep = step;
+        deepeningCount = count;
     }
 
     public void setOutFilename(String outFilename) {
@@ -94,14 +94,14 @@ public class GameControllerTestClass {
     }
 
     private void printReportHeader(){
-        this.report.println("P1 tree depth:"+this.gameModel.getPlayer(0).getAIDepth()+" P2 tree depth:"+this.gameModel.getPlayer(1).getAIDepth());
-        this.report.println("P = "+this.prev_p+" N = "+this.prev_n);
-        this.report.print("X set: ");
-        for (int i: this.prev_x) {
-            this.report.print(i+" ");
+        report.println("P1 tree depth:" + gameModel.getPlayer(0).getAIDepth()+" P2 tree depth:" + gameModel.getPlayer(1).getAIDepth());
+        report.println("P = " + prev_p + " N = " + prev_n);
+        report.print("X set: ");
+        for (int i: prev_x) {
+            report.print(i+" ");
         }
-        this.report.println();
-        this.report.println("Game results: ");
+        report.println();
+        report.println("Game results: ");
     }
 
     public void addStateListener(){
@@ -111,10 +111,7 @@ public class GameControllerTestClass {
                 if(newValue == GameModel.State.PLAYER_1_WIN || newValue == GameModel.State.PLAYER_2_WIN)
                     endOfGame();
                 if(newValue == GameModel.State.PLAYER_1_MOVE || newValue == GameModel.State.PLAYER_2_MOVE){
-                    if(gameModel.getCurrentPlayer().isHuman())
-                        return;
-                    else
-                        makeAIMove();
+                    makeAIMove();
                 }
             }
         });
@@ -136,7 +133,7 @@ public class GameControllerTestClass {
     }
 
     public void startGame() {
-        this.gameModel.initCurrent();
+        gameModel.initCurrent();
         updateState();
     }
 
