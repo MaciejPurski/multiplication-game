@@ -37,27 +37,25 @@ public class MultiGameState extends GameState {
      * @param isMaximizingState boolean that indicates who would perform next move from given GameState
      */
     public int valuate(boolean isMaximizingState) {
-        if(this.isTerminated()){
-            if(isMaximizingState) {
-                return Integer.MIN_VALUE;// MIN_VALUE because it's a state reached after opponent's decision. If it's terminal it means that we lose.
-            }
-            else {
-                return Integer.MAX_VALUE;
-            }
+        int nMoves = 0;
+        double remaining = (double) n / (double) p;
+        int ret;
+
+        while (remaining > maxX()) {
+            remaining /= (double) (minX() * maxX());
+            nMoves++;
         }
-        else{
-            double n = (double)this.getN();
-            double p = (double)this.getP();
-            int toVictory = (int)(Math.ceil(n/p));
-            if(toVictory <= this.maxX()){ //somebody can achieve victory from this state
-                if(isMaximizingState)
-                    return Integer.MAX_VALUE - toVictory;
-                else
-                    return Integer.MIN_VALUE + toVictory;
-            }
-            else
-                return toVictory;
-        }
+
+        if (remaining < 1 && isMaximizingState)
+            ret = Integer.MIN_VALUE + 1 + nMoves;
+        else if (remaining >= 1  && isMaximizingState)
+            ret = Integer.MAX_VALUE - 1 - nMoves;
+        else if (remaining < 1 && !isMaximizingState)
+            ret = Integer.MAX_VALUE - 1 - nMoves;
+        else
+            ret = Integer.MIN_VALUE + 1 + nMoves;
+
+        return ret;
     }
 
     /**
