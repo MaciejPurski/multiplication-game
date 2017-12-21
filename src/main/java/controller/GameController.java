@@ -46,9 +46,6 @@ public class GameController {
         this.currentState.addListener(new ChangeListener<State>() {
             @Override
             public void changed(ObservableValue<? extends State> observable, State oldValue, State newValue) {
-                if(newValue == State.PLAYER_1_WIN || newValue == State.PLAYER_2_WIN)
-                   gameView.showEndOfGameInfo();
-                    // System.out.println("Ktoś tam wygrał");
                 if(newValue == State.PLAYER_1_MOVE || newValue == State.PLAYER_2_MOVE){
                     if(gameModel.getCurrentPlayer().isHuman())
                         return;
