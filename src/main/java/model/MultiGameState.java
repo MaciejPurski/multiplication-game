@@ -71,8 +71,6 @@ public class MultiGameState extends GameState {
     MultiGameState nextState(int x) {
         MultiGameState result = new MultiGameState(this);
         result.p *= x;
-
-
         return result;
     }
 
