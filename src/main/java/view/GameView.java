@@ -98,7 +98,7 @@ public class GameView {
 
         ObservableList<Integer> items = FXCollections.observableArrayList();
         for(int x: gameController.getX())
-            items.add(new Integer(x));
+            items.add(x);
         xListView.setItems(items);
 
         if(getCurrentMove().equals(GameModel.State.PLAYER_1_MOVE)){
@@ -133,6 +133,9 @@ public class GameView {
         }
         else
             player2HistoryList.add(gameController.lastMoveToString());
+
+        if(gameController.getModel().isFinished())
+            showEndOfGameInfo();
     }
 
     public void showEndOfGameInfo(){
