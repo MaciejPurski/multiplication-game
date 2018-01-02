@@ -20,7 +20,7 @@ public class GameModel {
     }
 
     public void initPlayer(int index, boolean isHuman, int AIDepth){
-        if(isHuman)
+        if (isHuman)
             this.players[index] = new Player();
         else
             this.players[index] = new Player(AIDepth);

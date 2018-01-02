@@ -27,7 +27,6 @@ public class GameController {
     }
 
     public void initGame(int p, int n, int[] x) {
-
         try {
             gameModel.initGame(n, p, x);
         } catch (Exception e) {
@@ -42,27 +41,19 @@ public class GameController {
         this.gameModel.initPlayer(index, isHuman, AIDepth);
     }
 
-    public void addStateListener(){
-        this.currentState.addListener(new ChangeListener<State>() {
-            @Override
-            public void changed(ObservableValue<? extends State> observable, State oldValue, State newValue) {
-                if(newValue == State.PLAYER_1_MOVE || newValue == State.PLAYER_2_MOVE){
-                    if(gameModel.getCurrentPlayer().isHuman())
-                        return;
-                    else
+    public void addStateListener() {
+        this.currentState.addListener((observable, oldValue, newValue) -> {
+                if(newValue == State.PLAYER_1_MOVE || newValue == State.PLAYER_2_MOVE)
+                    if(!gameModel.getCurrentPlayer().isHuman())
                         makeAIMove();
-                }
-            }
-        });
+            });
     }
 
     public void initAIService(){
         this.aiserv = new AIService();
         this.aiserv.valueProperty().addListener((observable, oldValue, newValue) -> {
-            if(newValue != null){
-                System.out.println("AI");
+            if(newValue != null) {
                 this.gameModel.setState((MultiGameState) newValue);
-                System.out.printf("%d\n", gameModel.getState().getP());
                 gameView.updateUI();
                 gameView.addLastMoveToHistory();
                 updateState();

@@ -16,11 +16,11 @@ public class MainView {
     private Button playButton, generateButton;
 
     @FXML
-    public void playGame(ActionEvent event) throws IOException {
+    public void playGame() throws IOException {
         Stage stage;
         stage = (Stage) this.playButton.getScene().getWindow();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/Game.fxml"));
-        Parent root = (Parent) loader.load();
+        Parent root = loader.load();
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.setResizable(false);
@@ -28,11 +28,11 @@ public class MainView {
     }
 
     @FXML
-    public void generateReports(ActionEvent event) throws IOException {
+    public void generateReports() throws IOException {
         Stage stage;
         stage = (Stage) this.generateButton.getScene().getWindow();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/Report.fxml"));
-        Parent root = (Parent) loader.load();
+        Parent root = loader.load();
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.setResizable(false);

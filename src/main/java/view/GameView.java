@@ -24,21 +24,18 @@ public class GameView {
     private GameController gameController;
 
     @FXML
-    private Button newGameButton, restartButton, exitButton, goButton;
+    private Button exitButton;
 
     @FXML
-    private Label player1Label, player2Label, player1Type, player2Type;
+    private Label player1Label, player2Label;
 
     @FXML
-    private Label playerNP, playerP, pValue, nValue;
-
-    @FXML
-    private TextField playerTextField;
+    private Label pValue, nValue;
 
     @FXML
     private ListView xListView, player1List, player2List;
 
-    ObservableList<String> player1HistoryList, player2HistoryList;
+    private ObservableList<String> player1HistoryList, player2HistoryList;
 
     public GameView() throws IOException {
         gameController = new GameController(this);
@@ -46,7 +43,6 @@ public class GameView {
 
     @FXML
     public void onNewGameClicked(MouseEvent event) {
-        System.out.println("New Game");
         try {
             Stage stage = new Stage();
             ((Node) event.getSource()).getScene().getWindow().setOnCloseRequest(e -> {
@@ -128,18 +124,17 @@ public class GameView {
     }
 
     public void addLastMoveToHistory(){
-        if(getCurrentMove().equals(GameModel.State.PLAYER_2_MOVE) || getCurrentMove().equals(GameModel.State.PLAYER_1_WIN)){
+        if (getCurrentMove().equals(GameModel.State.PLAYER_2_MOVE) || getCurrentMove().equals(GameModel.State.PLAYER_1_WIN)) {
             player1HistoryList.add(gameController.lastMoveToString());
-        }
-        else
+        } else
             player2HistoryList.add(gameController.lastMoveToString());
 
-        if(gameController.getModel().isFinished())
+        if (gameController.getModel().isFinished())
             showEndOfGameInfo();
     }
 
     public void showEndOfGameInfo(){
-        if(getCurrentMove().equals(GameModel.State.PLAYER_1_WIN) || getCurrentMove().equals(GameModel.State.PLAYER_2_WIN)){
+        if (getCurrentMove().equals(GameModel.State.PLAYER_1_WIN) || getCurrentMove().equals(GameModel.State.PLAYER_2_WIN)) {
             player1HistoryList.add(getCurrentMove().toString());
             player2HistoryList.add(getCurrentMove().toString());
         }

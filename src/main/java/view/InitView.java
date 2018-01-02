@@ -85,7 +85,7 @@ public class InitView {
     }
 
     @FXML
-    public void onAddClicked(MouseEvent event){
+    public void onAddClicked() {
         int nItem = Integer.parseInt(xTextField.getText());
 
         if(!items.contains(nItem) && nItem > 1) {

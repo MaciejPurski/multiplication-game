@@ -63,6 +63,7 @@ public class AlgorithmAI {
 
         else {
             int best = Integer.MAX_VALUE;
+
             for (GameState state: possibleStates) {
                 int value = minMax(state, true, levelsLeft - 1, alpha, beta);
 
@@ -73,6 +74,7 @@ public class AlgorithmAI {
                 if (beta <= alpha)
                     break;
             }
+
             return best;
         }
     }
