@@ -10,16 +10,20 @@ public class MultiGameState extends GameState {
     private int p;
     private int[] x;
 
+    private static double logDivisor;
+
     public MultiGameState(int n, int p, int[] x) {
         this.n = n;
         this.p = p;
         this.x = x;
+        logDivisor = Math.log10(minX() * maxX());
     }
 
     public MultiGameState(MultiGameState other) {
         n = other.n;
         p = other.p;
         x = other.x;
+        logDivisor = Math.log10(minX() * maxX());
     }
 
     public int minX(){
