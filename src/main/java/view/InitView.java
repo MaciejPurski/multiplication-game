@@ -38,7 +38,6 @@ public class InitView {
 
     @FXML
     public void onStartClicked(MouseEvent event) {
-        //TODO: handle wrong values
         int pValue = Integer.parseInt(pTextField.getText());
         int nValue = Integer.parseInt(nTextField.getText());
 
@@ -50,6 +49,7 @@ public class InitView {
 
         gameController.initPlayer(0,player1Human.isSelected(), Integer.parseInt(player1Text.getText()));
         gameController.initPlayer(1,player2Human.isSelected(), Integer.parseInt(player2Text.getText()));
+        gameView.enableRestartandGo();
 
         Stage dialog = (Stage) ((Node) event.getTarget()).getScene().getWindow();
         dialog.close();

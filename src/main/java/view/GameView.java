@@ -24,7 +24,7 @@ public class GameView {
     private GameController gameController;
 
     @FXML
-    private Button exitButton;
+    private Button exitButton, goButton, restartButton;
 
     @FXML
     private Label player1Label, player2Label;
@@ -67,7 +67,6 @@ public class GameView {
 
     @FXML
     public void onRestartClicked() {
-        System.out.println("Restart");
         gameController.restart();
         initializePlayersHistoryLists();
     }
@@ -80,8 +79,9 @@ public class GameView {
 
     @FXML
     public void onGoClicked() {
+        if(xListView.getSelectionModel().isEmpty())
+            return;
         int x = Integer.parseInt(xListView.getSelectionModel().getSelectedItem().toString());
-
         if (x <= 1)
             return;
 
@@ -138,5 +138,10 @@ public class GameView {
             player1HistoryList.add(getCurrentMove().toString());
             player2HistoryList.add(getCurrentMove().toString());
         }
+    }
+
+    public void enableRestartandGo(){
+        goButton.setDisable(false);
+        restartButton.setDisable(false);
     }
 }

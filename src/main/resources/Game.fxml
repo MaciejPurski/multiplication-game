@@ -8,12 +8,12 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="468.0" prefWidth="387.0" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.GameView">
+<AnchorPane prefHeight="468.0" prefWidth="387.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.GameView">
    <children>
       <HBox alignment="TOP_CENTER" layoutY="406.0" prefHeight="48.0" prefWidth="387.0" spacing="15.0">
          <children>
             <Button fx:id="newGameButton" mnemonicParsing="false" onMouseClicked="#onNewGameClicked" prefHeight="48.0" prefWidth="110.0" text="New Game" />
-            <Button fx:id="restartButton" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onMouseClicked="#onRestartClicked" prefHeight="48.0" prefWidth="110.0" text="Restart" />
+            <Button fx:id="restartButton" disable="true" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onMouseClicked="#onRestartClicked" prefHeight="48.0" prefWidth="110.0" text="Restart" />
             <Button fx:id="exitButton" layoutX="120.0" layoutY="10.0" mnemonicParsing="false" onMouseClicked="#onExitClicked" prefHeight="48.0" prefWidth="110.0" text="Exit" />
          </children>
       </HBox>
@@ -85,7 +85,7 @@
       </HBox>
       <Label fx:id="playerP" alignment="CENTER_RIGHT" layoutX="31.0" layoutY="312.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="50.0" text="p x" />
       <Label fx:id="playerPN" layoutX="247.0" layoutY="312.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="36.0" text="= " />
-      <Button fx:id="goButton" layoutX="265.0" layoutY="312.0" mnemonicParsing="false" onMouseClicked="#onGoClicked" prefHeight="36.0" prefWidth="66.0" text="Go" />
+      <Button fx:id="goButton" disable="true" layoutX="265.0" layoutY="312.0" mnemonicParsing="false" onMouseClicked="#onGoClicked" prefHeight="36.0" prefWidth="66.0" text="Go" />
       <ListView layoutX="89.0" layoutY="308.0" orientation="HORIZONTAL" prefHeight="44.0" prefWidth="150.0" fx:id="xListView" />
    </children>
 </AnchorPane>

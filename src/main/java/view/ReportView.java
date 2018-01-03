@@ -89,8 +89,8 @@ public class ReportView {
                 showAlert("Parse error", "Cannot parse x values list. Check if all values are correct");
                 return false;
             }
-            if (temp < 1) {
-                showAlert("Wrong value", "X should not be less than 1");
+            if (temp < 2) {
+                showAlert("Wrong value", "X should not be less than 2");
                 return false;
             }
             if (integerList.contains(temp))
