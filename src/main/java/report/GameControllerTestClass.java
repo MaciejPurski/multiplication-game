@@ -9,6 +9,7 @@ import model.MultiGameState;
 
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 
 public class GameControllerTestClass {
     private GameModel gameModel;
@@ -23,7 +24,10 @@ public class GameControllerTestClass {
     private int deepeningStep = 0;
     private int deepeningCount = 0;
     private int outNumber = 1;
+    private int p1wins = 0;
+    private int p2wins = 0;
     private String outFilename;
+    private ArrayList<Boolean> wins = new ArrayList<>();
 
     public GameControllerTestClass(PrintWriter report, int attemptsNumber) {
         gameModel = new GameModel();
@@ -51,17 +55,36 @@ public class GameControllerTestClass {
     }
 
     private void endOfGame(){
-        if(gameModel.getCurrentMove() == GameModel.State.PLAYER_1_WIN)
-            report.println("Wygrana gracza 1 "+" (N = "+this.prev_n+")");
-        else
-            report.println("Wygrana gracza 2 "+" (N = "+this.prev_n+")");
+        if(gameModel.getCurrentMove() == GameModel.State.PLAYER_1_WIN) {
+            p1wins++;
+            wins.add(true);
+            //report.println("Wygrana gracza 1 " + " (N = " + this.prev_n + ")");
+        }
+        else {
+            p2wins++;
+            wins.add(false);
+            //report.println("Wygrana gracza 2 " + " (N = " + this.prev_n + ")");
+        }
         loopCounter--;
         if (loopCounter > 0) {
             prev_n++;
             restart();
         } else {
+            report.println("P1: " + p1wins);
+            report.println("P2: " + p2wins);
+            int n = prev_n - attemptsNumber + 1;
+            for (Boolean b: wins) {
+                if(b)
+                    report.println("Wygrana gracza 1 " + " (N = " + n + ")");
+                else
+                    report.println("Wygrana gracza 2 " + " (N = " + n + ")");
+                n++;
+            }
             if (deepeningCount > 0) {
                 report.close();
+                wins.clear();
+                p1wins = 0;
+                p2wins = 0;
                 loopCounter = attemptsNumber;
                 prev_n = prev_n - attemptsNumber + 1;
                 try {
